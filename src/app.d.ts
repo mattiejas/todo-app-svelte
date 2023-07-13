@@ -1,12 +1,21 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 declare global {
-	namespace App {
-		// interface Error {}
-		// interface Locals {}
-		// interface PageData {}
-		// interface Platform {}
-	}
+  namespace App {
+    // interface Error {}
+    interface Locals {
+      supabase: SupabaseClient;
+      getSession(): Promise<Session | null>;
+    }
+    interface PageData {
+      session: Session | null;
+    }
+    // interface Platform {}
+  }
 }
 
 export {};
+
+declare module '@fortawesome/pro-solid-svg-icons/index.es' {
+  export * from '@fortawesome/pro-solid-svg-icons';
+}
