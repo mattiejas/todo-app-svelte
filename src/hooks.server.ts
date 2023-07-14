@@ -3,6 +3,7 @@ import {
   PUBLIC_SUPABASE_API_URI,
   PUBLIC_SUPABASE_ANON_KEY,
 } from '$env/static/public';
+import { PrismaClient } from '@prisma/client';
 import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit';
 import type { Handle } from '@sveltejs/kit';
 
@@ -22,6 +23,8 @@ export const handle: Handle = async ({ event, resolve }) => {
     } = await event.locals.supabase.auth.getSession();
     return session;
   };
+
+  event.locals.prisma = new PrismaClient();
 
   return resolve(event, {
     filterSerializedResponseHeaders(name) {
