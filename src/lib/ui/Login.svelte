@@ -15,6 +15,15 @@
     user.set(undefined);
     open.set(false);
   }
+
+  async function signIn() {
+    const redirectTo = window.location.origin + '/authorize';
+    const response = await fetch(`/api/sign-in?redirect_to=${redirectTo}`, {
+      method: 'POST',
+    });
+    const { url } = await response.json();
+    window.location.href = url;
+  }
 </script>
 
 {#if $user}
@@ -30,10 +39,10 @@
     {$user.user_metadata.full_name}!
   </span>
 {:else}
-  <Link href="/login" class="flex items-center gap-4">
+  <Button on:click={signIn} class="flex items-center gap-4">
     <Fa icon={faDiscord} />
     Login with Discord
-  </Link>
+  </Button>
 {/if}
 
 {#if $open}
