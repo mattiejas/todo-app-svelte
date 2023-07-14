@@ -46,4 +46,22 @@ export const actions = {
       },
     });
   },
+  deleteTodo: async ({ locals, request }) => {
+    const session = await locals.getSession();
+
+    const formData = await request.formData();
+    const id = Number(formData.get('id'));
+
+    if (!session) {
+      return fail(401, {
+        message: 'Unauthorized',
+      });
+    }
+
+    await locals.prisma.todo.delete({
+      where: {
+        id,
+      },
+    });
+  },
 };
